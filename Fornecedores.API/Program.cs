@@ -1,11 +1,17 @@
 using Fornecedores.API;
+using Fornecedores.Infrastructure;
+using Fornecedores.Infrastructure.DbContext;
 using Fornecedores.Infrastructure.IRepository;
 using Fornecedores.Services;
 using Fornecedores.Services.IServices;
+using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddDbContext<FornecedorDbContext>(options =>
+                         options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
 builder.Services.AddSingleton<IFornecedorService, FornecedorService>();
 builder.Services.AddSingleton<IFornecedorRepository, FornecedorRepository>();
 

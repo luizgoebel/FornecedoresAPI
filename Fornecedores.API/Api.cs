@@ -5,15 +5,15 @@ namespace Fornecedores.API;
 
 public static class Api
 {
-    private const string Pattern = "/Fornecedores/{id}";
+    private const string Pattern = "api/Fornecedores";
 
     public static void ConfigureApi(this WebApplication app)
     {
-        app.MapGet("/Fornecedores", ObterFornecedor);
-        app.MapGet(Pattern, ObterFornecedores);
-        app.MapPost("/Fornecedores", InsertFornecedor);
-        app.MapPut("/Fornecedores", AtualizarFornecedor);
-        app.MapDelete("/Fornecedores", DeletarFornecedor);
+        app.MapGet(Pattern, ObterFornecedor);
+        app.MapGet($"{Pattern}/{"id"}", ObterFornecedores);
+        app.MapPost(Pattern, InsertFornecedor);
+        app.MapPut(Pattern, AtualizarFornecedor);
+        app.MapDelete($"{Pattern}/{"id"}", DeletarFornecedor);
     }
     private static async Task<IResult> ObterFornecedor(int id, IFornecedorService service)
     {
@@ -36,6 +36,6 @@ public static class Api
     private static async Task<IResult> DeletarFornecedor(int id, IFornecedorService service)
     {
         await service.DeletarFornecedor(id);
-        return Results.Ok();
+        return Results.Ok("Fornecedor deletado com sucesso!");
     }
 }
