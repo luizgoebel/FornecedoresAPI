@@ -9,7 +9,7 @@ public class FornecedorRepository : IFornecedorRepository
 {
     protected readonly FornecedorDbContext _contexto;
     public async Task AtualizarFornecedor(Fornecedor fornecedor)
-    => _contexto.Update(fornecedor);
+    => _contexto.Fornecedores.Update(fornecedor);
     public async Task DeletarFornecedor(int id)
     => _contexto.Fornecedores.FindAsync(id);
     public async Task InserirFornecedor(Fornecedor fornecedor)
