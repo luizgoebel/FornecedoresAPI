@@ -1,6 +1,8 @@
 ﻿using Fornecedores.Infrastructure.IRepository;
 using Fornecedores.Model.Models;
+using Fornecedores.Services.Exceptions;
 using Fornecedores.Services.IServices;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -19,32 +21,51 @@ public class FornecedorService : IFornecedorService
         try
         {
             if (id <= 0)
-                throw new System.Exception("Preencher o id.");
+                throw new ServiceException("Preencher o id.");
             if (fornecedor is null)
-                throw new System.Exception("Preencher os dados");
+                throw new ServiceException("Preencher os dados");
             await _fornecedorRepository.AtualizarFornecedor(id, fornecedor);
         }
-        catch (System.Exception)
+        catch (ServiceException ex)
+        {
+            throw new ServiceException(ex.Message);
+        }
+        catch (Exception)
         {
             throw;
         }
     }
     public async Task DeletarFornecedor(int id)
     {
-        if (id <= 0)
-            throw new System.Exception("Preencher o id.");
-        await _fornecedorRepository.DeletarFornecedor(id);
+        try
+        {
+            if (id <= 0)
+                throw new ServiceException("Preencher o id.");
+            await _fornecedorRepository.DeletarFornecedor(id);
+        }
+        catch (ServiceException ex)
+        {
+            throw new ServiceException(ex.Message);
+        }
+        catch (Exception)
+        {
+            throw;
+        }
     }
     public async Task InserirFornecedor(Fornecedor fornecedor)
     {
         try
         {
             if (fornecedor is null)
-                throw new System.Exception("Preencher os dados.");
+                throw new ServiceException("Preencher os dados.");
 
             await _fornecedorRepository.InserirFornecedor(fornecedor);
         }
-        catch (System.Exception)
+        catch (ServiceException ex)
+        {
+            throw new ServiceException(ex.Message);
+        }
+        catch (Exception)
         {
             throw;
         }
@@ -53,10 +74,16 @@ public class FornecedorService : IFornecedorService
     {
         try
         {
+            if(id <= 0)
+                throw new ServiceException("Preencher o id.");
             return await _fornecedorRepository.ObterFornecedor(id)
-                ?? throw new System.Exception("Fornecedor não encontrado.");
+                ?? throw new ServiceException("Fornecedor não encontrado.");
         }
-        catch (System.Exception)
+        catch (ServiceException ex)
+        {
+            throw new ServiceException(ex.Message);
+        }
+        catch (Exception)
         {
             throw;
         }
@@ -66,9 +93,13 @@ public class FornecedorService : IFornecedorService
         try
         {
             return await _fornecedorRepository.ObterFornecedores()
-             ?? throw new System.Exception("Não há fornecedores cadastrados.");
+             ?? throw new ServiceException("Não há fornecedores cadastrados.");
         }
-        catch (System.Exception)
+        catch (ServiceException ex)
+        {
+            throw new ServiceException(ex.Message);
+        }
+        catch (Exception)
         {
             throw;
         }

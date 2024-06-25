@@ -1,4 +1,5 @@
 using Fornecedores.API;
+using Fornecedores.API.Middlewares;
 using Fornecedores.Infrastructure;
 using Fornecedores.Infrastructure.DbContext;
 using Fornecedores.Infrastructure.IRepository;
@@ -25,6 +26,8 @@ builder.Services.AddSwaggerGen(c =>
 });
 builder.Services.AddEndpointsApiExplorer();
 var app = builder.Build();
+
+app.UseMiddleware<ExceptionMiddleware>();
 
 app.UseSwagger();
 
