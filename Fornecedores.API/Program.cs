@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using System;
@@ -41,7 +42,7 @@ builder.Services.AddEndpointsApiExplorer();
 
 var app = builder.Build();
 
-app.UseMiddleware<ExceptionMiddleware>();
+    app.UseMiddleware<ExceptionMiddleware>();
 
 app.UseSwagger();
 app.UseSwaggerUI(c =>
@@ -52,19 +53,22 @@ app.UseSwaggerUI(c =>
 var logger = app.Services.GetRequiredService<ILogger<Program>>();
 logger.LogInformation("Aplicativo iniciado.");
 
-// Verifica se o banco de dados existe e aplica as Migrations se necessário
-using var scope = app.Services.CreateScope();
-var services = scope.ServiceProvider;
-try
+// Verifica se está em ambiente de desenvolvimento e aplica as Migrations se necessário
+if (app.Environment.IsDevelopment())
 {
-    var dbContext = services.GetRequiredService<FornecedorDbContext>();
-    dbContext.Database.Migrate(); // Aplica as Migrations se necessário
-    logger.LogInformation("Migrations aplicadas com sucesso.");
-}
-catch (Exception ex)
-{
-    logger.LogError(ex, "Ocorreu um erro ao aplicar as Migrations.");
-    throw;
+    using var scope = app.Services.CreateScope();
+    var services = scope.ServiceProvider;
+    try
+    {
+        var dbContext = services.GetRequiredService<FornecedorDbContext>();
+        dbContext.Database.Migrate(); // Aplica as Migrations se necessário
+        logger.LogInformation("Migrations aplicadas com sucesso.");
+    }
+    catch (Exception ex)
+    {
+        logger.LogError(ex, "Ocorreu um erro ao aplicar as Migrations.");
+        throw;
+    }
 }
 
 app.UseHttpsRedirection();
