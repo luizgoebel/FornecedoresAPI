@@ -12,30 +12,30 @@ public class FornecedorRepository : IFornecedorRepository
 {
     protected readonly FornecedorDbContext _contexto;
 
-    public FornecedorRepository(FornecedorDbContext dbContext)
-    {
-        _contexto = dbContext;
-    }
+    public FornecedorRepository(FornecedorDbContext dbContext) => this._contexto = dbContext;
 
     public async Task AtualizarFornecedor(int id, Fornecedor atualizacao)
     {
         Fornecedor fornecedor = RecuperarFornecedor(id);
         fornecedor.AtualizarFornecedor(atualizacao);
-        _contexto.Fornecedores.Update(fornecedor);
-        await _contexto.SaveChangesAsync();
+        this._contexto.Fornecedores.Update(fornecedor);
+        await this._contexto.SaveChangesAsync();
     }
     public async Task DeletarFornecedor(int id)
     {
         Fornecedor fornecedor = RecuperarFornecedor(id);
-        _contexto.Fornecedores.Remove(fornecedor);
-        await _contexto.SaveChangesAsync();
+        this._contexto.Fornecedores.Remove(fornecedor);
+        await this._contexto.SaveChangesAsync();
     }
     public async Task InserirFornecedor(Fornecedor fornecedor)
-    => await _contexto.Fornecedores.AddAsync(fornecedor);
+    {
+        await this._contexto.Fornecedores.AddAsync(fornecedor);
+        await this._contexto.SaveChangesAsync();
+    }
     public async Task<Fornecedor?> ObterFornecedor(int id)
-    => await _contexto.Fornecedores.FirstOrDefaultAsync(x => x.Id == id);
+    => await this._contexto.Fornecedores.FirstOrDefaultAsync(x => x.Id == id);
     public async Task<IEnumerable<Fornecedor>> ObterFornecedores()
-    => _contexto.Fornecedores.ToList();
+    => this._contexto.Fornecedores.ToList();
     private Fornecedor RecuperarFornecedor(int id)
-    => _contexto.Fornecedores.FirstOrDefault(x => x.Id == id);
+    => this._contexto.Fornecedores.FirstOrDefault(x => x.Id == id);
 }

@@ -16,8 +16,8 @@ public class FornecedorService : IFornecedorService
 
     public FornecedorService(IFornecedorRepository fornecedorRepository, ILogger<FornecedorService> logger)
     {
-        _fornecedorRepository = fornecedorRepository;
-        _logger = logger;
+        this._fornecedorRepository = fornecedorRepository;
+        this._logger = logger;
     }
 
     public async Task AtualizarFornecedor(int id, Fornecedor fornecedor)
@@ -28,17 +28,17 @@ public class FornecedorService : IFornecedorService
                 throw new ServiceException("Preencher o id.");
             if (fornecedor is null)
                 throw new ServiceException("Preencher os dados");
-            await _fornecedorRepository.AtualizarFornecedor(id, fornecedor);
-            _logger.LogInformation($"Fornecedor atualizado com sucesso.");
+            await this._fornecedorRepository.AtualizarFornecedor(id, fornecedor);
+            this._logger.LogInformation($"Fornecedor atualizado com sucesso.");
         }
         catch (ServiceException ex)
         {
-            _logger.LogError(ex, ex.Message);
+            this._logger.LogError(ex, ex.Message);
             throw new ServiceException(ex.Message);
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Erro inesperado ao atualizar fornecedor.");
+            this._logger.LogError(ex, "Erro inesperado ao atualizar fornecedor.");
             throw;
         }
     }
@@ -48,17 +48,17 @@ public class FornecedorService : IFornecedorService
         {
             if (id <= 0)
                 throw new ServiceException("Preencher o id.");
-            await _fornecedorRepository.DeletarFornecedor(id);
-            _logger.LogInformation($"Fornecedor deletado com sucesso.");
+            await this._fornecedorRepository.DeletarFornecedor(id);
+            this._logger.LogInformation($"Fornecedor deletado com sucesso.");
         }
         catch (ServiceException ex)
         {
-            _logger.LogError(ex, ex.Message);
+            this._logger.LogError(ex, ex.Message);
             throw new ServiceException(ex.Message);
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Erro inesperado ao deletar fornecedor.");
+            this._logger.LogError(ex, "Erro inesperado ao deletar fornecedor.");
             throw;
         }
     }
@@ -68,18 +68,18 @@ public class FornecedorService : IFornecedorService
         {
             if (fornecedor is null)
                 throw new ServiceException("Preencher os dados.");
-            await _fornecedorRepository.InserirFornecedor(fornecedor);
-            _logger.LogError($"Fornecedor Adicionado com sucesso.");
+            await this._fornecedorRepository.InserirFornecedor(fornecedor);
+            this._logger.LogError($"Fornecedor Adicionado com sucesso.");
 
         }
         catch (ServiceException ex)
         {
-            _logger.LogError(ex, ex.Message);
+            this._logger.LogError(ex, ex.Message);
             throw new ServiceException(ex.Message);
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Erro inesperado ao inserir fornecedor.");
+            this._logger.LogError(ex, "Erro inesperado ao inserir fornecedor.");
             throw;
         }
     }
@@ -89,17 +89,17 @@ public class FornecedorService : IFornecedorService
         {
             if (id <= 0)
                 throw new ServiceException("Preencher o id.");
-            return await _fornecedorRepository.ObterFornecedor(id)
+            return await this._fornecedorRepository.ObterFornecedor(id)
                 ?? throw new ServiceException("Fornecedor não encontrado.");
         }
         catch (ServiceException ex)
         {
-            _logger.LogError(ex, ex.Message);
+            this._logger.LogError(ex, ex.Message);
             throw new ServiceException(ex.Message);
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Erro inesperado ao obter fornecedor.");
+            this._logger.LogError(ex, "Erro inesperado ao obter fornecedor.");
             throw;
         }
     }
@@ -107,17 +107,17 @@ public class FornecedorService : IFornecedorService
     {
         try
         {
-            return await _fornecedorRepository.ObterFornecedores()
+            return await this._fornecedorRepository.ObterFornecedores()
              ?? throw new ServiceException("Não há fornecedores cadastrados.");
         }
         catch (ServiceException ex)
         {
-            _logger.LogError(ex, ex.Message);
+            this._logger.LogError(ex, ex.Message);
             throw new ServiceException(ex.Message);
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Erro inesperado ao obter fornecedores.");
+            this._logger.LogError(ex, "Erro inesperado ao obter fornecedores.");
             throw;
         }
     }
