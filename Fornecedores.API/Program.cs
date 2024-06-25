@@ -9,9 +9,16 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddLogging(logging =>
+{
+    logging.ClearProviders(); 
+    logging.AddConsole(); // Adiciona o provedor de log para o console
+});
 
 builder.Services.AddDbContext<FornecedorDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
@@ -35,6 +42,12 @@ app.UseSwaggerUI(c =>
 {
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "ApiFornecedores V1");
 });
+
+// Configure o logging
+var logger = app.Services.GetRequiredService<ILogger<Program>>();
+
+// Exemplo de log de informação
+logger.LogInformation("Aplicativo iniciado.");
 
 app.UseHttpsRedirection();
 app.ConfigureApi();
