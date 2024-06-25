@@ -24,10 +24,8 @@ public class FornecedorService : IFornecedorService
     {
         try
         {
-            if (id <= 0)
-                throw new ServiceException("Preencher o id.");
-            if (fornecedorDto is null)
-                throw new ServiceException("Preencher os dados.");
+            ValidarId(id);
+            ValidarFornecedorNaoNulo(fornecedorDto);
             await FornecedorExiste(id);
             await this._fornecedorRepository.AtualizarFornecedor(id, fornecedorDto);
             this._logger.LogInformation($"Fornecedor atualizado com sucesso.");
@@ -47,8 +45,7 @@ public class FornecedorService : IFornecedorService
     {
         try
         {
-            if (id <= 0)
-                throw new ServiceException("Preencher o id.");
+            ValidarId(id);
             await this._fornecedorRepository.DeletarFornecedor(id);
             this._logger.LogInformation($"Fornecedor deletado com sucesso.");
         }
@@ -67,8 +64,7 @@ public class FornecedorService : IFornecedorService
     {
         try
         {
-            if (fornecedor is null)
-                throw new ServiceException("Preencher os dados.");
+            ValidarFornecedorNaoNulo(fornecedor);
             await this._fornecedorRepository.InserirFornecedor(fornecedor);
             this._logger.LogError($"Fornecedor Adicionado com sucesso.");
 
@@ -88,8 +84,7 @@ public class FornecedorService : IFornecedorService
     {
         try
         {
-            if (id <= 0)
-                throw new ServiceException("Preencher o id.");
+            ValidarId(id);
             return await ObterFornecedorPorId(id);
         }
         catch (ServiceException ex)
@@ -103,19 +98,6 @@ public class FornecedorService : IFornecedorService
             throw;
         }
     }
-
-    private async Task<Fornecedor> ObterFornecedorPorId(int id)
-    {
-        await FornecedorExiste(id);
-        return await this._fornecedorRepository.ObterFornecedor(id);
-    }
-    private async Task FornecedorExiste(int id)
-    {
-        Fornecedor? fornecedor = await this._fornecedorRepository.ObterFornecedor(id);
-        if (fornecedor == null)
-            throw new ServiceException("Fornecedor não encontrado.");
-    }
-
     public async Task<IEnumerable<Fornecedor>> ObterFornecedores()
     {
         try
@@ -133,5 +115,27 @@ public class FornecedorService : IFornecedorService
             this._logger.LogError(ex, ex.Message);
             throw;
         }
+    }
+    private async Task<Fornecedor> ObterFornecedorPorId(int id)
+    {
+        await FornecedorExiste(id);
+        return await this._fornecedorRepository.ObterFornecedor(id);
+    }
+    private async Task FornecedorExiste(int id)
+    {
+        ValidarId(id);
+        Fornecedor? fornecedor = await this._fornecedorRepository.ObterFornecedor(id);
+        if (fornecedor == null)
+            throw new ServiceException("Fornecedor não encontrado.");
+    }
+    private void ValidarId(int id)
+    {
+        if (id <= 0)
+            throw new ServiceException("Preencher o id.");
+    }
+    private void ValidarFornecedorNaoNulo(Fornecedor fornecedor)
+    {
+        if (fornecedor == null)
+            throw new ServiceException("Preencher os dados.");
     }
 }
