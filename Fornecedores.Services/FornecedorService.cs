@@ -136,7 +136,9 @@ public class FornecedorService : IFornecedorService
     }
     private void ValidarFornecedorNaoNulo(Fornecedor fornecedor)
     {
-        if (fornecedor == null)
+        if (fornecedor == null ||
+            string.IsNullOrEmpty(fornecedor.Nome) &&
+            string.IsNullOrEmpty(fornecedor.Email))
             throw new ServiceException("Preencher os dados.");
     }
 }
