@@ -119,14 +119,15 @@ public class FornecedorService : IFornecedorService
     private async Task<Fornecedor> ObterFornecedorPorId(int id)
     {
         await FornecedorExiste(id);
-        return await this._fornecedorRepository.ObterFornecedor(id);
+        Fornecedor? fornecedor = await this._fornecedorRepository.ObterFornecedor(id);
+        ValidarFornecedorNaoNulo(fornecedor!);
+        return fornecedor!;
     }
     private async Task FornecedorExiste(int id)
     {
         ValidarId(id);
         Fornecedor? fornecedor = await this._fornecedorRepository.ObterFornecedor(id);
-        if (fornecedor == null)
-            throw new ServiceException("Fornecedor não encontrado.");
+        ValidarFornecedorNaoNulo(fornecedor);
     }
     private void ValidarId(int id)
     {
