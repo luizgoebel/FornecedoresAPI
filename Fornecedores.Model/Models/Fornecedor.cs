@@ -1,4 +1,4 @@
-﻿namespace Fornecedores.Model;
+﻿namespace Fornecedores.Model.Models;
 
 public class Fornecedor
 {

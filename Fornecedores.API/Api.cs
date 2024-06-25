@@ -1,5 +1,8 @@
-﻿using Fornecedores.Model;
+﻿using Fornecedores.Model.Models;
 using Fornecedores.Services.IServices;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using System.Threading.Tasks;
 
 namespace Fornecedores.API;
 
@@ -9,10 +12,10 @@ public static class Api
 
     public static void ConfigureApi(this WebApplication app)
     {
-        app.MapGet(Pattern, ObterFornecedor);
-        app.MapGet($"{Pattern}/{"id"}", ObterFornecedores);
+        app.MapGet(Pattern, ObterFornecedores);
+        app.MapGet($"{Pattern}/{"id"}", ObterFornecedor);
         app.MapPost(Pattern, InsertFornecedor);
-        app.MapPut(Pattern, AtualizarFornecedor);
+        app.MapPut($"{Pattern}/{"id"}", AtualizarFornecedor);
         app.MapDelete($"{Pattern}/{"id"}", DeletarFornecedor);
     }
     private static async Task<IResult> ObterFornecedor(int id, IFornecedorService service)
@@ -28,9 +31,9 @@ public static class Api
         await service.InserirFornecedor(fornecedor);
         return Results.Ok("Fornecedor foi inserido com sucesso!");
     }
-    private static async Task<IResult> AtualizarFornecedor(Fornecedor fornecedor, IFornecedorService service)
+    private static async Task<IResult> AtualizarFornecedor(int id, Fornecedor fornecedor, IFornecedorService service)
     {
-        await service.AtualizarFornecedor(fornecedor);
+        await service.AtualizarFornecedor(id, fornecedor);
         return Results.Ok("Fornecedor foi atualizado com sucesso!");
     }
     private static async Task<IResult> DeletarFornecedor(int id, IFornecedorService service)

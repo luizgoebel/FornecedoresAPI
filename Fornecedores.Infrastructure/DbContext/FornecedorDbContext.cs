@@ -1,5 +1,6 @@
-﻿using Fornecedores.Model;
+﻿using Fornecedores.Model.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace Fornecedores.Infrastructure.DbContext;
 

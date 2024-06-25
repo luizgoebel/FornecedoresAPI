@@ -1,14 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Fornecedores.Infrastructure\Fornecedores.Infrastructure.csproj" />
-    <ProjectReference Include="..\Fornecedores.Model\Fornecedores.Model.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Fornecedores.Infrastructure\Fornecedores.Infrastructure.csproj" />
+		<ProjectReference Include="..\Fornecedores.Model\Fornecedores.Model.csproj" />
+	</ItemGroup>
 
 </Project>

@@ -4,20 +4,21 @@ using Fornecedores.Infrastructure.DbContext;
 using Fornecedores.Infrastructure.IRepository;
 using Fornecedores.Services;
 using Fornecedores.Services.IServices;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Configuração do DbContext
 builder.Services.AddDbContext<FornecedorDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
 
-// Configuração dos serviços
-builder.Services.AddSingleton<IFornecedorService, FornecedorService>();
-builder.Services.AddSingleton<IFornecedorRepository, FornecedorRepository>();
+// Registro do serviço e do repositório
+builder.Services.AddScoped<IFornecedorService, FornecedorService>();
+builder.Services.AddScoped<IFornecedorRepository, FornecedorRepository>();
 
-// Configuração do Swagger
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "ApiFornecedores", Version = "v1" });
@@ -25,17 +26,14 @@ builder.Services.AddSwaggerGen(c =>
 builder.Services.AddEndpointsApiExplorer();
 var app = builder.Build();
 
-// Middleware para habilitar o Swagger JSON endpoint
 app.UseSwagger();
 
-// Middleware para habilitar o Swagger UI (interface do usuário)
 app.UseSwaggerUI(c =>
 {
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "ApiFornecedores V1");
 });
 
-// Configuração adicional do pipeline HTTP
 app.UseHttpsRedirection();
-app.ConfigureApi();  // Supondo que isso configura o resto da API, ajuste conforme necessário
+app.ConfigureApi();
 
 app.Run();
