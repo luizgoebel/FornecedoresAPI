@@ -20,13 +20,16 @@ public class FornecedorRepository : IFornecedorRepository
     public async Task AtualizarFornecedor(int id, Fornecedor atualizacao)
     {
         Fornecedor fornecedor = RecuperarFornecedor(id);
-        fornecedor.Nome = atualizacao.Nome;
-        fornecedor.Email = atualizacao.Email;
+        fornecedor.AtualizarFornecedor(atualizacao);
         _contexto.Fornecedores.Update(fornecedor);
         await _contexto.SaveChangesAsync();
     }
     public async Task DeletarFornecedor(int id)
-    => _contexto.Fornecedores.FindAsync(id);
+    {
+        Fornecedor fornecedor = RecuperarFornecedor(id);
+        _contexto.Fornecedores.Remove(fornecedor);
+        await _contexto.SaveChangesAsync();
+    }
     public async Task InserirFornecedor(Fornecedor fornecedor)
     => await _contexto.Fornecedores.AddAsync(fornecedor);
     public async Task<Fornecedor?> ObterFornecedor(int id)
@@ -34,7 +37,5 @@ public class FornecedorRepository : IFornecedorRepository
     public async Task<IEnumerable<Fornecedor>> ObterFornecedores()
     => _contexto.Fornecedores.ToList();
     private Fornecedor RecuperarFornecedor(int id)
-    {
-        return _contexto.Fornecedores.FirstOrDefault(x => x.Id == id);
-    }
+    => _contexto.Fornecedores.FirstOrDefault(x => x.Id == id);
 }

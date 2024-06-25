@@ -10,5 +10,5 @@ public interface IFornecedorService
     Task<Fornecedor?> ObterFornecedor(int id);
     Task<IEnumerable<Fornecedor>> ObterFornecedores();
     Task InserirFornecedor(Fornecedor fornecedor);
-    Task AtualizarFornecedor(int id, Fornecedor fornecedor);
+    Task AtualizarFornecedor(int id, Fornecedor fornecedorDto);
 }

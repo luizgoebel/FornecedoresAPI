@@ -1,4 +1,5 @@
-﻿using Fornecedores.Model.Models;
+﻿using Fornecedores.API.DTOs;
+using Fornecedores.Model.Models;
 using Fornecedores.Services.IServices;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -31,9 +32,9 @@ public static class Api
         await service.InserirFornecedor(fornecedor);
         return Results.Ok("Fornecedor foi inserido com sucesso!");
     }
-    private static async Task<IResult> AtualizarFornecedor(int id, Fornecedor fornecedor, IFornecedorService service)
+    private static async Task<IResult> AtualizarFornecedor(int id, FornecedorDto fornecedorDto, IFornecedorService service)
     {
-        await service.AtualizarFornecedor(id, fornecedor);
+        await service.AtualizarFornecedor(id, fornecedorDto);
         return Results.Ok("Fornecedor foi atualizado com sucesso!");
     }
     private static async Task<IResult> DeletarFornecedor(int id, IFornecedorService service)

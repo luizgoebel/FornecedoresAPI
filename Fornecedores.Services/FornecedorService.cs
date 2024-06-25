@@ -15,13 +15,62 @@ public class FornecedorService : IFornecedorService
     }
 
     public async Task AtualizarFornecedor(int id, Fornecedor fornecedor)
-    => await _fornecedorRepository.AtualizarFornecedor(id, fornecedor);
+    {
+        try
+        {
+            if (id <= 0)
+                throw new System.Exception("Preencher o id.");
+            if (fornecedor is null)
+                throw new System.Exception("Preencher os dados");
+            await _fornecedorRepository.AtualizarFornecedor(id, fornecedor);
+        }
+        catch (System.Exception)
+        {
+            throw;
+        }
+    }
     public async Task DeletarFornecedor(int id)
-    => await _fornecedorRepository.DeletarFornecedor(id);
+    {
+        if (id <= 0)
+            throw new System.Exception("Preencher o id.");
+        await _fornecedorRepository.DeletarFornecedor(id);
+    }
     public async Task InserirFornecedor(Fornecedor fornecedor)
-    => await _fornecedorRepository.InserirFornecedor(fornecedor);
+    {
+        try
+        {
+            if (fornecedor is null)
+                throw new System.Exception("Preencher os dados.");
+
+            await _fornecedorRepository.InserirFornecedor(fornecedor);
+        }
+        catch (System.Exception)
+        {
+            throw;
+        }
+    }
     public async Task<Fornecedor?> ObterFornecedor(int id)
-    => await _fornecedorRepository.ObterFornecedor(id);
+    {
+        try
+        {
+            return await _fornecedorRepository.ObterFornecedor(id)
+                ?? throw new System.Exception("Fornecedor não encontrado.");
+        }
+        catch (System.Exception)
+        {
+            throw;
+        }
+    }
     public async Task<IEnumerable<Fornecedor>> ObterFornecedores()
-    => await _fornecedorRepository.ObterFornecedores();
+    {
+        try
+        {
+            return await _fornecedorRepository.ObterFornecedores()
+             ?? throw new System.Exception("Não há fornecedores cadastrados.");
+        }
+        catch (System.Exception)
+        {
+            throw;
+        }
+    }
 }
