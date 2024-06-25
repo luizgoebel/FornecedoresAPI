@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using System;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,8 +21,13 @@ builder.Services.AddLogging(logging =>
     logging.AddConsole();     // Adiciona o provedor de log para o console
 });
 
+// Configuração do DbContext
 builder.Services.AddDbContext<FornecedorDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Default"),
+        sqlServerOptionsAction: sqlOptions =>
+        {
+            sqlOptions.MigrationsAssembly(typeof(FornecedorDbContext).Assembly.FullName);
+        }));
 
 builder.Services.AddScoped<IFornecedorService, FornecedorService>();
 builder.Services.AddScoped<IFornecedorRepository, FornecedorRepository>();
@@ -45,6 +51,21 @@ app.UseSwaggerUI(c =>
 
 var logger = app.Services.GetRequiredService<ILogger<Program>>();
 logger.LogInformation("Aplicativo iniciado.");
+
+// Verifica se o banco de dados existe e aplica as Migrations se necessário
+using var scope = app.Services.CreateScope();
+var services = scope.ServiceProvider;
+try
+{
+    var dbContext = services.GetRequiredService<FornecedorDbContext>();
+    dbContext.Database.Migrate(); // Aplica as Migrations se necessário
+    logger.LogInformation("Migrations aplicadas com sucesso.");
+}
+catch (Exception ex)
+{
+    logger.LogError(ex, "Ocorreu um erro ao aplicar as Migrations.");
+    throw;
+}
 
 app.UseHttpsRedirection();
 app.ConfigureApi();
