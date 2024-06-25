@@ -16,7 +16,8 @@ public class FornecedorRepository : IFornecedorRepository
 
     public async Task AtualizarFornecedor(int id, Fornecedor atualizacao)
     {
-        Fornecedor fornecedor = RecuperarFornecedor(id);
+        Fornecedor fornecedor = RecuperarFornecedor(id)
+            ?? throw new System.Exception("Fornecedor não encontrado.");
         fornecedor.AtualizarFornecedor(atualizacao);
         this._contexto.Fornecedores.Update(fornecedor);
         await this._contexto.SaveChangesAsync();
