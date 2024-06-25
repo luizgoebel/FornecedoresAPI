@@ -20,15 +20,17 @@ public class FornecedorService : IFornecedorService
         this._logger = logger;
     }
 
-    public async Task AtualizarFornecedor(int id, Fornecedor fornecedor)
+    public async Task AtualizarFornecedor(int id, Fornecedor fornecedorDto)
     {
         try
         {
             if (id <= 0)
                 throw new ServiceException("Preencher o id.");
-            if (fornecedor is null)
-                throw new ServiceException("Preencher os dados");
-            await this._fornecedorRepository.AtualizarFornecedor(id, fornecedor);
+            if (fornecedorDto is null)
+                throw new ServiceException("Preencher os dados.");
+            Fornecedor fornecedor = await _fornecedorRepository.ObterFornecedor(id)
+                ?? throw new ServiceException("Fornecedor não encontrado.");
+            await this._fornecedorRepository.AtualizarFornecedor(id, fornecedorDto);
             this._logger.LogInformation($"Fornecedor atualizado com sucesso.");
         }
         catch (ServiceException ex)
@@ -38,7 +40,7 @@ public class FornecedorService : IFornecedorService
         }
         catch (Exception ex)
         {
-            this._logger.LogError(ex, "Erro inesperado ao atualizar fornecedor.");
+            this._logger.LogError(ex, ex.Message);
             throw;
         }
     }
@@ -58,7 +60,7 @@ public class FornecedorService : IFornecedorService
         }
         catch (Exception ex)
         {
-            this._logger.LogError(ex, "Erro inesperado ao deletar fornecedor.");
+            this._logger.LogError(ex, ex.Message);
             throw;
         }
     }
@@ -79,7 +81,7 @@ public class FornecedorService : IFornecedorService
         }
         catch (Exception ex)
         {
-            this._logger.LogError(ex, "Erro inesperado ao inserir fornecedor.");
+            this._logger.LogError(ex, ex.Message);
             throw;
         }
     }
@@ -99,7 +101,7 @@ public class FornecedorService : IFornecedorService
         }
         catch (Exception ex)
         {
-            this._logger.LogError(ex, "Erro inesperado ao obter fornecedor.");
+            this._logger.LogError(ex, ex.Message);
             throw;
         }
     }
@@ -117,7 +119,7 @@ public class FornecedorService : IFornecedorService
         }
         catch (Exception ex)
         {
-            this._logger.LogError(ex, "Erro inesperado ao obter fornecedores.");
+            this._logger.LogError(ex, ex.Message);
             throw;
         }
     }
