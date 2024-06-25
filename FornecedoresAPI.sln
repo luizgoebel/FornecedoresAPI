@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35013.160
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fornecedores.API", "Fornecedores.API\Fornecedores.API.csproj", "{AA86E432-99DC-4426-BC63-CB91BE8992C2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fornecedores.API", "Fornecedores.API\Fornecedores.API.csproj", "{AA86E432-99DC-4426-BC63-CB91BE8992C2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fornecedores.Infrastructure", "Fornecedores.Infrastructure\Fornecedores.Infrastructure.csproj", "{8678F7FF-DE42-4E9B-BA65-A0414D2C1D53}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fornecedores.Infrastructure", "Fornecedores.Infrastructure\Fornecedores.Infrastructure.csproj", "{8678F7FF-DE42-4E9B-BA65-A0414D2C1D53}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fornecedores.Services", "Fornecedores.Services\Fornecedores.Services.csproj", "{DA08601B-4A8B-4AE4-BC5B-73BAAFD0D730}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fornecedores.Services", "Fornecedores.Services\Fornecedores.Services.csproj", "{DA08601B-4A8B-4AE4-BC5B-73BAAFD0D730}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fornecedores.Model", "Fornecedores.Model\Fornecedores.Model.csproj", "{381CD6CC-7731-4127-A608-FD852C2870C9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fornecedores.Model", "Fornecedores.Model\Fornecedores.Model.csproj", "{381CD6CC-7731-4127-A608-FD852C2870C9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fornecedores.Tests", "Fornecedores.Tests\Fornecedores.Tests.csproj", "{66015ED7-6315-4AF1-974C-530412165788}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{381CD6CC-7731-4127-A608-FD852C2870C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{381CD6CC-7731-4127-A608-FD852C2870C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{381CD6CC-7731-4127-A608-FD852C2870C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66015ED7-6315-4AF1-974C-530412165788}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66015ED7-6315-4AF1-974C-530412165788}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66015ED7-6315-4AF1-974C-530412165788}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66015ED7-6315-4AF1-974C-530412165788}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
