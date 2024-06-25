@@ -1,6 +1,6 @@
---- Configurar a string de conexão para máquina que deseja executar o projeto,
-o sistema está preparado para criar o banco, gerar migrations e popular registros de forma automática porém
-isso somente será possível se configurar o server da string de conexão. ---
+--> Configurar a string de conexão para máquina que deseja executar o projeto,
+o sistema está configurado para criar o banco, gerar migrations e popular registros de forma automática porém
+isso somente será possível se configurar o server da string de conexão. <--
 
 Endpoints
 A API segue o padrão REST e possui os seguintes endpoints:
